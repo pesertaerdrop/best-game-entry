@@ -69,8 +69,8 @@ export function createRenderer(canvas) {
     }
     ctx.globalAlpha = 1;
     // Moon with a soft halo.
-    const mx = 812;
-    const my = 84;
+    const mx = 768;
+    const my = 118;
     const glow = ctx.createRadialGradient(mx, my, 8, mx, my, 90);
     glow.addColorStop(0, PALETTE.moonGlow);
     glow.addColorStop(1, 'rgba(255, 233, 176, 0)');
@@ -433,7 +433,7 @@ export function createRenderer(canvas) {
     if (state.combo >= 2) {
       const mult = Math.min(4, 1 + (state.combo - 1) * 0.5);
       ctx.fillStyle = 'rgba(255, 217, 77, 0.92)';
-      roundRect(ctx, 24, 116, 118, 30, 15);
+      roundRect(ctx, 24, 116, 172, 30, 15);
       ctx.fill();
       ctx.fillStyle = '#241a33';
       ctx.font = 'bold 15px "Trebuchet MS", "Segoe UI", sans-serif';

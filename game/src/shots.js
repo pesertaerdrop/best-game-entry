@@ -7,13 +7,13 @@ export function stageShot(name, world) {
   if (name === 'start') {
     world.stage({
       state: { distance: 0, score: 0, combo: 0, hearts: 3, time: 6.2 },
-      player: { lane: 1, height: 0 },
+      player: { lane: 0, height: 0 },
       entities: [
-        { kind: 'rock', lane: 0, x: 620, y: 0 },
-        { kind: 'bramble', lane: 2, x: 780, y: 0 },
-        { kind: 'firefly', lane: 1, x: 560, y: GROUND_Y - 30 },
-        { kind: 'firefly', lane: 1, x: 612, y: GROUND_Y - 44 },
-        { kind: 'firefly', lane: 1, x: 664, y: GROUND_Y - 30 },
+        { kind: 'rock', lane: 2, x: 620, y: 0 },
+        { kind: 'bramble', lane: 1, x: 780, y: 0 },
+        { kind: 'firefly', lane: 0, x: 560, y: GROUND_Y - 30 },
+        { kind: 'firefly', lane: 0, x: 612, y: GROUND_Y - 44 },
+        { kind: 'firefly', lane: 0, x: 664, y: GROUND_Y - 30 },
         { kind: 'firefly', lane: 2, x: 880, y: GROUND_Y - 118 },
       ],
     });
