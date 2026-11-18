@@ -91,6 +91,7 @@ function runGame() {
 
   function startGame() {
     world.reset();
+    world.setAutoPilot(false);
     accumulator = 0;
     screen = SCREEN_PLAY;
     audioApi.unlock();
@@ -179,6 +180,7 @@ function runGame() {
     if (screen === SCREEN_TITLE) {
       world.update([]);
       world.state.events.length = 0; // the demo run is silent behind the menu
+      if (world.state.over || world.state.won) world.reset(); // the demo never stays dead
     } else if (screen === SCREEN_PLAY) {
       // The pointer steers: hovering a third of the screen picks that lane.
       const mouseLane = input.mouseLane;

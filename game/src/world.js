@@ -84,6 +84,7 @@ export function createWorld(random) {
   };
 
   function reset() {
+    const keepAutoPilot = state.autoPilot;
     state.distance = 0;
     state.score = 0;
     state.combo = 0;
@@ -107,7 +108,7 @@ export function createWorld(random) {
     state.particles.length = 0;
     state.events.length = 0;
     state.spawnIn = 1.1;
-    state.autoPilot = false;
+    state.autoPilot = keepAutoPilot;
   }
 
   function burst(x, y, color, count, power) {
@@ -213,15 +214,27 @@ export function createWorld(random) {
     const p = state.player;
     for (const e of state.entities) {
       const dx = e.x - p.x;
-      if (dx < 40 || dx > 260) continue;
+      if (dx < 40 || dx > 420) continue;
       if (Math.abs(laneX(e.lane) - p.x) > 50) continue;
-      if (e.kind === 'rock' && onGround()) tryJump();
-      else if (e.kind === 'bramble' && onGround()) trySlide();
-      else if (e.kind === 'boulder') {
-        const free = [0, 1, 2].find((l) => l !== e.lane && !state.entities.some((o) => o.lane === l && Math.abs(o.x - e.x) < 120 && (o.kind === 'boulder' || o.kind === 'rock')));
-        if (free !== undefined) p.lane = free;
+      if (e.kind === 'rock') {
+        if (onGround()) tryJump();
+        else if (p.height < 20 && p.vy < 0) dodgeToFreeLane(e);
+      } else if (e.kind === 'bramble' && onGround()) {
+        trySlide();
+      } else if (e.kind === 'boulder') {
+        dodgeToFreeLane(e);
       }
     }
+  }
+
+  function dodgeToFreeLane(obstacle) {
+    const p = state.player;
+    const free = [0, 1, 2].find(
+      (l) =>
+        l !== obstacle.lane &&
+        !state.entities.some((o) => o.lane === l && Math.abs(o.x - obstacle.x) < 170 && o.kind !== 'firefly' && o.kind !== 'heart' && o.kind !== 'star'),
+    );
+    if (free !== undefined) p.lane = free;
   }
 
   function hitObstacle(entity) {
